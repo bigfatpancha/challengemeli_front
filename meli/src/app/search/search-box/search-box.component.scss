@@ -1,0 +1,28 @@
+.app-search-box {
+    display: flex;
+    &__input {
+        height: 39px;
+        padding-left: 7px;
+        -webkit-border-radius: 2px;
+        border: 0 rgba(0,0,0,.2);
+        border-radius: 2px;
+        background-color: #fff;
+        box-sizing: border-box;
+        color: #333;
+        font-size: 16px;
+        width: 100%;
+        margin: 0;
+        display: inline-flex;
+        position: relative;
+    }
+
+    &__button {
+        width: 46px;
+        height: 39px;
+        background-color: #EEEEEE;
+        border: unset;
+        background-image: url('/assets/images/ic_Search.png');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}

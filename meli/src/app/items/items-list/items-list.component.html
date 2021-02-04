@@ -1,0 +1,18 @@
+<div class="app-items-list">
+
+    <div class="app-item" *ngFor="let item of items">
+        <div class="app-item__photo"><img [src]="item.picture" alt="Item picture"></div>
+        <div class="app-item__body">
+            <div class="app-item__body--top">
+                <span class="app-item__body--top-price">{{item.price.amount}}</span> <!-- formatear -->
+                <img *ngIf="item.free_shipping" src="assets/images/ic_shipping.png" alt="free shipping">
+            </div>
+            <div class="app-item__body--title">
+                <span>{{item.title}}</span>
+            </div>
+        </div>
+        <div class="app-item__condition">
+            <span>{{item.condition}}</span>
+        </div>
+    </div>
+</div>

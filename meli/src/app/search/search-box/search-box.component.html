@@ -1,0 +1,12 @@
+<div class="app-search-box">
+    <input 
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+        type="text"
+        [ngModel]="value"
+        (ngModelChange)="setValue($event)"
+        class="app-search-box__input" aria-label="Ingresá lo que quieras encontrar"
+        placeholder="Nunca dejes de buscar" maxlength="120" autofocus="" autocapitalize="off" autocorrect="off"
+        spellcheck="false" autocomplete="off">
+    <button type="submit" class="app-search-box__button"></button>
+</div>

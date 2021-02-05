@@ -27,12 +27,6 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', distFolder);
   
-  // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => {
-    
-  // });
-  server.use('/api/hello', (req,res) => res.send({text:"Hello World"}));
-
   server.use('/api/items', (req,res) => {
     const urlObject = {q: req.query.search}; 
     const parsedQuery = querystring.stringify(urlObject);
@@ -43,6 +37,8 @@ export function app(): express.Express {
       });
       resp.on('end', () => {
         const results = JSON.parse(data).results;
+        const cat = JSON.parse(data).filters.find(filter => filter.id === 'category');
+        const categories = cat ? cat.values.map(cat => cat.name) : [];
         const items = results.map(item => {
           return {
             id: item.id,
@@ -62,7 +58,7 @@ export function app(): express.Express {
             name: 'Lucia',
             lastname: 'Julia'
           },
-          categories: [],
+          categories: categories,
           items: items
         }
         res.send({data: response})
@@ -72,10 +68,61 @@ export function app(): express.Express {
       console.log("Error: " + err.message);
       res.send({error: err})
     });
-
-
     
   });
+
+
+  server.use('/api/item/:id', (req,res) => {
+    const id = req.params.id;
+    https.get('https://api.mercadolibre.com/items/'+ id, (resp) => {
+      let data = '';
+      resp.on('data', (chunk) => {
+        data += chunk;
+      });
+      resp.on('end', () => {
+        const itemAPI = JSON.parse(data);
+        const item = {
+          id: itemAPI.id,
+            title: itemAPI.title,
+            price: {
+              amount: itemAPI.price,
+              decimals: 0,
+              currency: itemAPI.currency_id
+            },
+            picture: itemAPI.thumbnail,
+            condition: itemAPI.condition,
+            free_shipping: itemAPI.shipping.free_shipping,
+            sold_quantity: itemAPI.sold_quantity,
+            description: ''
+        }
+        const response = {
+          author: {
+            name: 'Lucia',
+            lastname: 'Julia'
+          },
+          item: item
+        }
+        https.get('https://api.mercadolibre.com/items/'+ id + '/description', (resp) => {
+          let data2 = '';  
+          resp.on('data', (chunk) => {
+            data2 += chunk;
+          });
+          resp.on('end', () => {
+            const descAPI = JSON.parse(data2);
+            response.item.description = descAPI.plain_text;
+            res.send({data: response});
+          });
+        })
+      });
+    
+    }).on("error", (err) => {
+      console.log("Error: " + err.message);
+      res.send({error: err})
+    });
+  });
+
+
+
 
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {

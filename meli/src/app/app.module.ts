@@ -7,13 +7,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { SearchBoxComponent } from './search/search-box/search-box.component';
 import { HeaderComponent } from './search/header/header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     SearchBoxComponent,
-    HeaderComponent
+    HeaderComponent,
+    BreadcrumbComponent
   ],
   imports: [
     AppRoutingModule,
@@ -21,7 +23,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' })
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

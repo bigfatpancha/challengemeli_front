@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
+import { CategoriesService } from 'src/app/shared/categories.service';
 import { Item, ItemsResponseData } from '../model/item';
 import { HttpService } from '../services/http.service';
 
@@ -14,8 +15,15 @@ export class ItemsListComponent implements OnInit {
 
   items: Item[] = []
   itemsLoaded = false;
+  error = false;
 
-  constructor(private router: Router, private httpService: HttpService, private route: ActivatedRoute, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private router: Router,
+    private httpService: HttpService,
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
+    private catService: CategoriesService
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.pipe(
@@ -23,14 +31,16 @@ export class ItemsListComponent implements OnInit {
       map((params: Params) => params.search)
     ).subscribe(params => {
       this.httpService.doGetItems(params).subscribe((data: ItemsResponseData) => {
-        console.log(data)
+        this.error = false;
         this.items = data.data.items;
+        this.catService.setCategories(data.data.categories);
         this.itemsLoaded = true;
-        console.log(this.items)
         this.cdr.markForCheck();
+      }, error => {
+        this.error = true;
+        this.itemsLoaded = false;
       });
-    }
-    );
+    });
   }
 
   goToDescription(item) {

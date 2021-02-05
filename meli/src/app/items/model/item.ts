@@ -29,3 +29,12 @@ export class Author {
     name: string;
     lastname: string;
 }
+
+export class DescriptionResponseData {
+    data: DescriptionResponse;
+}
+
+export class DescriptionResponse {
+    autor: Author;
+    item: Item
+}

@@ -1,0 +1,37 @@
+$app-breadcrumb-font-color: #999;
+$app-breadcrumb-font-family: Helvetica Neue, Helvetica, Roboto;
+
+.app-breadcrumb {
+    margin: 0;
+    padding: 16px 0;
+    list-style: none;
+
+    &__item {
+        list-style: none;
+
+        &:last-child {
+            span {
+                pointer-events: none;
+                color: $app-breadcrumb-font-color;
+            }
+
+            &::after {
+                content: "";
+            }
+        }
+
+        &::after {
+            font-family: $app-breadcrumb-font-family;
+            font-size: 14px;
+            color: $app-breadcrumb-font-color;
+            content: "\e914";
+        }
+    }
+
+    &__text {
+        font-family: $app-breadcrumb-font-family;
+        font-size: 14px;
+        color: $app-breadcrumb-font-color;
+        cursor: pointer;
+    }
+}

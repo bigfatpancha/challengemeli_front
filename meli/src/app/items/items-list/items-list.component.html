@@ -1,5 +1,4 @@
 <div class="app-items-list">
-
     <div class="app-items-list__container" *ngIf="itemsLoaded">
         <div class="app-item" *ngFor="let item of items" (click)="goToDescription(item)">
             <div class="app-item--start">
@@ -19,4 +18,8 @@
             </div>
         </div>
     </div>
+</div>
+<div *ngIf="!itemsLoaded"><span>Cargando items...</span></div>
+<div *ngIf="error">
+    <span>Ocurrió un error al obtener la información</span>
 </div>

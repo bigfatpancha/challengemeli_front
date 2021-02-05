@@ -25,7 +25,7 @@ export class PriceComponent {
     if (currency === 'ARS') {
       this._currency = '$';
     } else {
-      this._currency = 'U$D';
+      this._currency = currency;
     }
   }
   _currency = '$';

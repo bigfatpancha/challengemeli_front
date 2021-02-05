@@ -7,7 +7,6 @@ import { ItemsDescriptionComponent } from './items-description/items-description
 import { PriceComponent } from './components/price/price.component';
 import { HttpService } from './services/http.service';
 
-
 @NgModule({
   declarations: [ItemsListComponent, ItemsDescriptionComponent, PriceComponent],
   imports: [

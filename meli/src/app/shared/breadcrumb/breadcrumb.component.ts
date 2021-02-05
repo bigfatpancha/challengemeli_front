@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CategoriesService } from 'src/app/shared/categories.service';
+import { CategoriesService } from '../categories.service';
 
 @Component({
   selector: 'app-breadcrumb',

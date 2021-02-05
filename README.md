@@ -5,7 +5,7 @@
 * Node version 12
 
 ## Run the project
-* Clone the repository 
+* git clone https://github.com/bigfatpancha/challengemeli_front.git
 * cd challengemeli_front\meli
 * npm install
 * npm run build:ssr

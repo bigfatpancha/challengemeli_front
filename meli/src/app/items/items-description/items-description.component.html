@@ -1,1 +1,17 @@
-<p>items-description works!</p>
+<div class="app-item">
+
+    <div class="app-item--right">
+        <div class="app-item__picture"><img [src]="item.picture" alt="item picture"></div>
+        <h2 class="app-item__description-title">Descripción del producto</h2>
+        <p class="app-item__description">{{item.description}}</p>
+    </div>
+    <div class="app-item--left">
+        <div class="app-item__info">{{item.condition}} - {{item.sold_quantity}} vendidos</div>
+        <h1 class="app-item__title">{{item.title}}</h1>
+        <div class="app-item__price">
+            <app-price size="large" [amount]="item.price.amount" [currency]="item.price.currency" [decimals]="item.price.decimals"></app-price>
+        </div>
+        <button class="app-item__button">Comprar</button>
+    </div>
+
+</div>

@@ -1,20 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-
-class Item {
-  id: string;
-  title: string;
-  price: Currency;
-  picture: string;
-  condition: string;
-  free_shipping: boolean;
-
-}
-
-class Currency {
-  currency: string;
-  amount: number;
-  decimals: number;
-}
+import { ActivatedRoute, Router } from '@angular/router';
+import { Item } from '../model/item';
 
 @Component({
   selector: 'app-items-list',
@@ -33,7 +19,7 @@ export class ItemsListComponent implements OnInit {
       price: {
         amount: 2499,
         decimals: 0,
-        currency: '$'
+        currency: 'ARS'
       },
       title: 'Colchoneta Plegable Flotadora Inflable Jilong Sillon 2 En 1'
     },
@@ -45,15 +31,19 @@ export class ItemsListComponent implements OnInit {
       price: {
         amount: 2499,
         decimals: 0,
-        currency: '$'
+        currency: 'ARS'
       },
       title: 'Colchoneta Plegable Flotadora Inflable Jilong Sillon 2 En 1'
     }
   ];
 
-  constructor() { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+  }
+
+  goToDescription(item) {
+    this.router.navigate([`items/${item.id}`]);
   }
 
 }

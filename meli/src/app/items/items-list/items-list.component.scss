@@ -1,34 +1,57 @@
-.app-items-list {
-    top: 56px;
-    position: relative;
-    margin: 20px 50px 0 50px;
+$app-items-list-background-color: #fff;
+$app-items-list-title-font-color: #333;
+$app-items-list-info-font-color: #666;
+$app-items-list-text-font-color: #999;
+$app-items-list-border-color: #EEEEEE;
+$app-items-list-padding: 32px;
+$app-items-list-padding-small: 16px;
+
+.app-items-list__container {
+    background-color: $app-items-list-background-color;
 }
 
 .app-item {
     display: flex;
-    background-color: #FFFFFF;
-    padding: 20px;
-    border-bottom: 1px solid #EEEEEE;
-    //justify-content: space-between;
-    &__photo img {
-        width: 160px;
-        height: 160px;
-        margin-right: 8px;
+    justify-content: flex-start;
+    border-bottom: 1px solid $app-items-list-border-color;
+    margin: 0 $app-items-list-padding-small 0 $app-items-list-padding-small;
+    padding: $app-items-list-padding-small 0 $app-items-list-padding-small 0;
+
+    &--start {
+        display: flex;
+        width: 75%;
+    }
+    &__picture img {
+        width: 180px;
+        height: 180px;
+        border-radius: 4px;
+        padding-right: $app-items-list-padding-small;
     }
     &__body {
-        margin-left: 8px;
-        margin-right: 8px;
         &--top {
             display: flex;
+            align-items: center;
+            padding-bottom: $app-items-list-padding;
+            padding-top: $app-items-list-padding-small;
             &-price {
                 margin-right: 16px;
                 font-size: 1.5rem;
             }
+            img {
+                height: 16px;
+            }
+        }
+        &-title {
+            font-size: 18px;
+            font-weight: 400;
+            font-family: Helvetica Neue, Helvetica;
+            color: $app-items-list-title-font-color;
+            margin: unset;
         }
     }
     &__condition {
-        position: absolute;
-        right: 50px;
-        top: 25px;
+        padding-top: $app-items-list-padding-small;
+        font-size: 12px;
+        color: $app-items-list-text-font-color;
     }
 }

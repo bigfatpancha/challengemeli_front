@@ -1,0 +1,60 @@
+$app-item-background-color: #fff;
+$app-item-title-font-color: #333;
+$app-item-info-font-color: #666;
+$app-item-text-font-color: #999;
+$app-item-button-color: #3483fa;
+$app-item-padding: 32px;
+$app-item-padding-small: 16px;
+
+
+.app-item {
+    background-color: $app-item-background-color;
+    display: flex;
+    padding: $app-item-padding;
+
+    &__picture img {
+        width: 680px;
+    }
+    &__description-title {
+        font-size: 28px;
+        color: $app-item-title-font-color;
+        padding-bottom: $app-item-padding;
+        margin: unset;
+        font-weight: 400;
+    }
+    &__description {
+        font-size: 16px;
+        color: $app-item-text-font-color;
+        max-width: 700px;
+        margin: unset;
+    }
+
+    &__info {
+        font-size: 14px;
+        color: $app-item-info-font-color;
+        padding-bottom: $app-item-padding-small;
+    }
+
+    &__title {
+        font-size: 24px;
+        color: $app-item-title-font-color;
+        padding-bottom: $app-item-padding;
+    }
+
+    &__price {
+        padding-bottom: $app-item-padding;
+    }
+
+    &__button {
+        border-color: transparent;
+        background-color: $app-item-button-color;
+        color: $app-item-background-color;
+        line-height: 48px;
+        padding: 0 24px;
+        height: 48px;
+        text-align: center;
+        border-radius: 6px;
+        width: 100%;
+        font-size: 18px;
+    }
+}

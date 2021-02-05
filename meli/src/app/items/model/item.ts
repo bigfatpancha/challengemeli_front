@@ -14,3 +14,18 @@ export class Currency {
     amount: number;
     decimals: number;
 }
+
+export class ItemsResponseData {
+    data: ItemsResponse;
+}
+
+export class ItemsResponse {
+    author: Author;
+    categories: string[];
+    items: Item[]
+}
+
+export class Author {
+    name: string;
+    lastname: string;
+}

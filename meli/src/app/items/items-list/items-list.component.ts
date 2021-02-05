@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Item } from '../model/item';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
+import { Item, ItemsResponseData } from '../model/item';
+import { HttpService } from '../services/http.service';
 
 @Component({
   selector: 'app-items-list',
@@ -10,36 +12,25 @@ import { Item } from '../model/item';
 })
 export class ItemsListComponent implements OnInit {
 
-  items: Item[] = [
-    {
-      id: '1',
-      condition: 'nuevo',
-      free_shipping: true,
-      picture: 'https://http2.mlstatic.com/D_Q_NP_954785-MLA43643824641_102020-AB.webp',
-      price: {
-        amount: 2499,
-        decimals: 0,
-        currency: 'ARS'
-      },
-      title: 'Colchoneta Plegable Flotadora Inflable Jilong Sillon 2 En 1'
-    },
-    {
-      id: '1',
-      condition: 'nuevo',
-      free_shipping: true,
-      picture: 'https://http2.mlstatic.com/D_Q_NP_954785-MLA43643824641_102020-AB.webp',
-      price: {
-        amount: 2499,
-        decimals: 0,
-        currency: 'ARS'
-      },
-      title: 'Colchoneta Plegable Flotadora Inflable Jilong Sillon 2 En 1'
-    }
-  ];
+  items: Item[] = []
+  itemsLoaded = false;
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router, private httpService: HttpService, private route: ActivatedRoute, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    this.route.queryParams.pipe(
+      filter((params: Params) => params.search),
+      map((params: Params) => params.search)
+    ).subscribe(params => {
+      this.httpService.doGetItems(params).subscribe((data: ItemsResponseData) => {
+        console.log(data)
+        this.items = data.data.items;
+        this.itemsLoaded = true;
+        console.log(this.items)
+        this.cdr.markForCheck();
+      });
+    }
+    );
   }
 
   goToDescription(item) {

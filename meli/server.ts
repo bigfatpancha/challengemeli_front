@@ -14,19 +14,69 @@ export function app(): express.Express {
   const distFolder = join(process.cwd(), 'dist/meli/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
   const http = require('http');
-
+  (global as any).WebSocket = require('ws');
+  (global as any).XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+  const https = require('https');
+  const querystring = require('querystring');
+  
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine('html', ngExpressEngine({
     bootstrap: AppServerModule,
   }));
-
+  
   server.set('view engine', 'html');
   server.set('views', distFolder);
-
+  
   // Example Express Rest API endpoints
-  server.get('/api/**', (req, res) => {
+  // server.get('/api/**', (req, res) => {
+    
+  // });
+  server.use('/api/hello', (req,res) => res.send({text:"Hello World"}));
+
+  server.use('/api/items', (req,res) => {
+    const urlObject = {q: req.query.search}; 
+    const parsedQuery = querystring.stringify(urlObject);
+    https.get('https://api.mercadolibre.com/sites/MLA/search?'+ parsedQuery, (resp) => {
+      let data = '';
+      resp.on('data', (chunk) => {
+        data += chunk;
+      });
+      resp.on('end', () => {
+        const results = JSON.parse(data).results;
+        const items = results.map(item => {
+          return {
+            id: item.id,
+            title: item.title,
+            price: {
+              amount: item.price,
+              decimals: 0,
+              currency: item.currency_id
+            },
+            picture: item.thumbnail,
+            condition: item.condition,
+            free_shipping: item.shipping.free_shipping
+          }
+        });
+        const response = {
+          author: {
+            name: 'Lucia',
+            lastname: 'Julia'
+          },
+          categories: [],
+          items: items
+        }
+        res.send({data: response})
+      });
+    
+    }).on("error", (err) => {
+      console.log("Error: " + err.message);
+      res.send({error: err})
+    });
+
+
     
   });
+
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
     maxAge: '1y'
